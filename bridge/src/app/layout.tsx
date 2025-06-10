@@ -12,7 +12,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body>{children}</body>
+      <body className="h-auto m-auto ">{children}</body>
     </html>
   );
 }

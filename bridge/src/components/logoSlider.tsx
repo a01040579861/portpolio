@@ -2,34 +2,35 @@
 
 import { motion } from "framer-motion";
 
-const logos = [
-  "html",
-  "css",
-  "js",
-  "react",
-  "redux",
-  "ajax",
-  "jquery",
-  "sass",
-  "styled-component",
-  "tailwind",
-];
+interface LogoSliderProps {
+  logos: string[];
+  folder: string;
+  direction?: "left" | "right";
+  speed?: number;
+}
 
-const LogoSlider = () => {
+const LogoSlider = ({
+  logos,
+  folder,
+  direction = "left",
+  speed = 1000,
+}: LogoSliderProps) => {
+  const animation =
+    direction === "left" ? { x: ["5%", "-40%"] } : { x: ["-40%", "5%"] };
+
   return (
-    <div className="relative overflow-hidden bg-black py-6">
+    <div className="flex items-center justify-around overflow-hidden py-10">
       <motion.div
-        className="flex gap-24 w-max"
-        animate={{ x: ["0%", "-50%"] }} // 슬라이더를 절반만 밀면 반복이 자연스러움
-        transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
+        className="flex gap-32 w-max"
+        animate={animation}
+        transition={{ repeat: Infinity, duration: speed, ease: "linear" }}
       >
-        {/* 두 세트를 연결 */}
         {[...logos, ...logos].map((name, idx) => (
           <img
-            key={`${name}-${idx}`}
-            src={`/images/logo_1/${name}.png`}
+            key={`${folder}-${name}-${idx}`}
+            src={`/images/${folder}/${name}.png`}
             alt={name}
-            className="h-20 w-auto transition-transform duration-300 hover:scale-110 drop-shadow-md hover:drop-shadow-xl"
+            className="h-20 px-4 transition-transform duration-300 hover:scale-110 hover:drop-shadow-[0_0_4px_rgba(255,255,255,0.6)]"
           />
         ))}
       </motion.div>
