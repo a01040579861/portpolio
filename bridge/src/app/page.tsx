@@ -1,10 +1,15 @@
-import Header from "@/components/header";
-import Intro from "@/components/intro";
-import Item from "@/components/item";
+"use client";
+import Header from "@/components/common/header";
+import Main from "@/components/pages/main";
+import Item from "@/components/pages/item";
 import LogoSlider from "@/components/logoSlider";
-import Point from "@/components/point";
-import Profile from "@/components/profile";
-import Project from "@/components/project";
+import Profile from "@/components/pages/profile";
+import Project from "@/components/pages/project";
+import Point from "@/components/pages/point";
+import Footer from "@/components/common/footer";
+import ScrollToUp from "@/components/scrollToUp";
+import { useRef } from "react";
+import { SectionName } from "@/types/click";
 
 const logos1 = [
   "html",
@@ -18,7 +23,6 @@ const logos1 = [
   "styled-component",
   "tailwind",
 ];
-
 const logos2 = [
   "axios",
   "gsap",
@@ -27,8 +31,9 @@ const logos2 = [
   "supabase",
   "ts",
   "zustand",
+  "git",
+  "sqlite",
 ];
-
 const logos3 = [
   "aws",
   "firebase",
@@ -38,14 +43,12 @@ const logos3 = [
   "mysql",
   "netlify",
   "postman",
-  "sqlite",
 ];
 const logos4 = [
   "androidstudio",
   "api",
   "bs4",
   "express",
-  "git",
   "java",
   "jupyter",
   "kotlin",
@@ -57,10 +60,29 @@ const logos4 = [
 ];
 
 const Home = () => {
+  const profileRef = useRef<HTMLDivElement | null>(null);
+  const projectRef = useRef<HTMLDivElement | null>(null);
+  const itemRef = useRef<HTMLDivElement | null>(null);
+  const pointRef = useRef<HTMLDivElement | null>(null);
+
+  const scrollTo = (section: SectionName) => {
+    const refs = {
+      profile: profileRef,
+      project: projectRef,
+      item: itemRef,
+      point: pointRef,
+    };
+
+    refs[section]?.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <main className="min-h-screen w-full">
-      <Header />
-      <Intro />
+    <main className="w-full">
+      {/* 헤더 & 첫화면 */}
+      <div>
+        <Header onNavigate={scrollTo} />
+        <Main />
+      </div>
 
       {/* 첫 번째 슬라이드 */}
       <div className="w-full h-full">
@@ -68,11 +90,13 @@ const Home = () => {
           logos={logos1}
           folder="logo_1"
           direction="left"
-          speed={10}
+          speed={100}
         />
       </div>
-
-      <Profile />
+      {/* 프로필 */}
+      <div ref={profileRef}>
+        <Profile />
+      </div>
 
       {/* 두 번째 슬라이드 */}
       <div className="w-full h-full">
@@ -80,22 +104,26 @@ const Home = () => {
           logos={logos2}
           folder="logo_2"
           direction="right"
-          speed={10}
+          speed={100}
         />
       </div>
-
-      <Project />
+      {/* 프로젝트 */}
+      <div ref={projectRef}>
+        <Project />
+      </div>
       {/* 세 번째 슬라이드 */}
       <div className="w-full h-full">
         <LogoSlider
           logos={logos3}
           folder="logo_3"
           direction="left"
-          speed={10}
+          speed={100}
         />
       </div>
 
-      <Item />
+      <div ref={itemRef}>
+        <Item />
+      </div>
 
       {/* 네 번째 슬라이드 */}
       <div className="w-full h-full">
@@ -103,11 +131,17 @@ const Home = () => {
           logos={logos4}
           folder="logo_4"
           direction="right"
-          speed={10}
+          speed={100}
         />
       </div>
 
-      <Point />
+      <div ref={pointRef}>
+        <Point />
+      </div>
+      <ScrollToUp />
+      <div>
+        <Footer />
+      </div>
     </main>
   );
 };

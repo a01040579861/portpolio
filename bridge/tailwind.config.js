@@ -7,10 +7,25 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        "spin-slow": "spin 12s linear infinite",
+        "spin-slow": "spin 8s linear infinite",
+        fadeIn: "fadeIn 0.5s ease-out",
+        zoomIn: "zoomIn 0.5s ease-out",
+      },
+      keyframes: {
+        zoomIn: {
+          "0%": {
+            opacity: "0",
+            transform: "scale(0)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "scale(1)",
+          },
+        },
       },
       colors: {
         primary: "#8B3DCC",
+        sub2: "var(--sub2)",
       },
       fontFamily: {
         pretendard: ["Pretendard", "sans-serif"],
